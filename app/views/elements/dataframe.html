@@ -1,0 +1,24 @@
+
+{% if table is defined %}
+<thead>
+
+<tr>
+{% for field in table['schema']['fields'] %}
+    <th>{{ field['name'] }}</th>
+{% endfor %}
+</tr>
+
+</thead>
+<tbody>
+
+{% for row in table['data'] %}
+    <tr>
+    {% for field in table['schema']['fields'] %}
+    <td>{{ row[field['name']] }}</td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+
+</tbody>
+
+{% endif %}

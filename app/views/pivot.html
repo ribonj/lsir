@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% set active_page = "pivot" %} 
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="btn-group">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if current_table is defined %}
+          {{ current_table }}
+          {% endif %}
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        {% if table_names is defined and table_names|length > 0 %}
+        <ul id="table_name" class="dropdown-menu">
+          {% for name in table_names %}
+          <li><a href="/pivot/{{name}}">{{ name }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <!-- .btn-group -->
+      <input id="load_pivot" class="btn btn-primary" type="submit" value="Load" />
+    </div>
+    <!-- .btn-group .pull-right -->
+    
+    <div id="output">
+    </div>
+  </div>
+  <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->
+
+
+{% endblock content %}

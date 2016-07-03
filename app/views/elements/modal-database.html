@@ -1,0 +1,74 @@
+
+<!-- Button trigger modal -->
+<div class="modal fade" id="modal_database" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Database Connection</h4>
+      </div>
+      
+      
+      <form class="form-horizontal" role="form" action="{{ url_for('main.connect_database') }}" method="post">
+        <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="data_format" class="control-label col-sm-2">DBMS:</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="dbms">
+                    <option>MySQL</option>
+                </select>
+             </div>
+          </div>
+          <!-- /.form-group -->
+          
+          <div class="form-group">
+            <label for="data_source" class="control-label col-sm-2">Username:</label>
+            <div class="col-sm-10"><input type="text" class="form-control" name="username" value="root"></div>
+          </div>
+          <!-- /.form-group -->
+          
+          <div class="form-group">
+            <label for="data_source" class="control-label col-sm-2">Password:</label>
+            <div class="col-sm-10"><input type="password" class="form-control" name="password"></div>
+          </div>
+          <!-- /.form-group -->
+          
+          <div class="form-group">
+            <label for="data_source" class="control-label col-sm-2">Host:</label>
+            <div class="col-sm-10"><input type="text" class="form-control" name="host" value="localhost"></div>
+          </div>
+          <!-- /.form-group -->
+          
+          <div class="form-group">
+            <label for="data_source" class="control-label col-sm-2">Port:</label>
+            <div class="col-sm-10"><input type="text" class="form-control" name="port"></div>
+          </div>
+          <!-- /.form-group -->
+          
+          <div class="form-group">
+            <label for="data_source" class="control-label col-sm-2">Database:</label>
+            <div class="col-sm-10"><input type="text" class="form-control" name="database"></div>
+          </div>
+          <!-- /.form-group -->
+          
+          <div class="form-group">
+            <label for="data_source" class="control-label col-sm-2">Table:</label>
+            <div class="col-sm-10"><input type="text" class="form-control" name="table"></div>
+          </div>
+          <!-- /.form-group -->
+          
+        </div>
+        <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Connect</button>
+        </div>
+        <!-- .modal-footer -->
+        
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.button trigger modal -->

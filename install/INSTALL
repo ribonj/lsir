@@ -1,0 +1,36 @@
+apt-get install python, apache2, libapache2-mod-wsgi, python-virtualenv
+cd /var/www/
+mkdir nubes
+cd nubes
+virtualenv-3.4 venv
+. venv/bin/activate
+pip install Flask
+#pip install Flask-MongoKit
+
+pip install Flask-pymongo Flask-Login Flask-Mail 
+
+sudo chmod -R 777 /opt
+
+curl http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.0.6.tgz > mongo.tgz
+tar -zxvf mongo.tgz
+mv mongodb-linux-x86_64-2.0.6 mongodb
+export PATH=$PATH:/opt/mongodb/bin/
+mkdir -p /data/db
+sudo chmod -R 777 /data
+cd /opt/mongodb/bin
+./mongod
+
+
+For Mac via MacPorts:
+sudo port install python27 py27-virtualenv py27-pip
+sudo port install python34 py34-virtualenv py34-pip
+sudo port install mod_wsgi +python27
+sudo port select --set python python34
+sudo port install apache2
+
+Warning: choose the appropriate mongodb version according to your OS.
+curl http://downloads.mongodb.org/linux/mongodb-osx-x86_64-2.6.1.tgz > mongo.tgz
+
+curl http://downloads.mongodb.org/linux/mongodb-osx-x86_64-2.2.0.tgz > mongo.tgz
+
+

@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% set active_page = 'column' %} 
+{% block content %}
+
+<div class="row">
+<div class="col-md-12">
+  <h3><span class="fa fa-columns"></span> {{name}}: <i>{{type}}</i></h3>
+</div>
+</div>
+
+<div id="column_stats" class="row">
+<div class="col-md-3">
+  <table class="table table-bordered table-hover table-striped table-condensed">
+  <thead>
+  <tr>
+  {% for column in statistics %}
+      <th>{{column}}</th>
+  {% endfor %}
+  </tr>
+  </thead>
+  <tbody>
+  {% for row in values %}
+      <tr>
+      {% for column in statistics %}
+      <td>{{ row[column] if row[column] != None else '' }}</td>
+      {% endfor %}
+      </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+</div> <!-- /.col -->
+<div class="col-md-9">
+    <div id="column_chart"></div>
+</div>
+</div>
+<!-- /.row -->
+
+
+<!-- C3 and D3 Libraries -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+        
+<script type="text/javascript">
+  function display(data, axis, step, format, prefix) {
+	  var chart = c3.generate({
+		    bindto: '#column_chart',
+		    data: {
+		        x: 'x',
+		        columns: [axis, data],
+		        type: 'bar'
+		    },
+            bar: {
+                // bar width between ticks
+                // or variant width:100 (this makes bar width 100px)
+                width: {ratio: 0.75} 
+            }
+            //*
+            ,
+            axis : {
+                x : {
+                    tick: {
+                       format: function (x) {
+                           var tick = '';
+                           var interval_end = '';
+                           
+                           // Last interval is closed, otherwise open
+                           if (x+step == axis[axis.length-1]) {
+                               interval_end = ']';
+                           } else {
+                               interval_end = ')';
+                           }
+                           
+                           // computes x axis ticks based on data format
+                           if (format=='integer') {
+                               tick = x + ', ' + (x+step);
+                           } else if (format=='decimal') {
+                        	   tick = x.toFixed(4) + ', ' + (x+step).toFixed(4);
+                           } else {
+                               tick = prefix + String.fromCharCode(x) + ', '
+                                      + prefix + String.fromCharCode(x+step);
+                           }
+                           
+                           // output the complete interval
+                           return '[' + tick + interval_end; // e.g. [2,6)
+                       }
+                    }
+                }
+            }
+		});
+  };
+  
+  var name = '{{name|safe}}';
+  var data = {{data|tojson|safe}};
+  var axis = {{axis|tojson|safe}};
+  var step = {{step|safe}};
+  var format = '{{format|safe}}';
+  var pre = '{{prefix|safe}}';
+  
+  data.unshift(name); // append element at beginning of array
+  axis.unshift('x');
+  
+  display(data, axis, step, format, pre);
+</script>
+
+{% endblock content %}

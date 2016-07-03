@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% set active_page = "grid" %} 
+{% block content %}
+
+<div class="row">
+<div class="col-md-12" style="padding:0;">
+
+{% if schema|length > 0 %}
+    
+<table id="data_grid" class="table table-responsive table-bordered table-hover table-striped table-condensed">
+<thead>
+
+<tr>
+    <th width="1px"></th>
+    
+    {% for column, type in schema %}
+    {%if column != 'GridID' %}
+    <th class="column" style="min-width:{{(column|length + type|length + 2)*7.5+50}}px">
+    <div class="pull-left" style="padding-top:5px;"><a href="/grid/{{column}}/stats"><u>{{column}}</u>: <i>{{type}}</i></a></div>
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="fa fa-caret-down"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#" data-toggle="modal" data-target="#grid_rename_modal" data-column="{{column}}" data-operation="rename"><span class="fa fa-edit"></span> Rename</a></li>
+        <li><a href="{{ url_for('spark.drop', column=column) }}"><span class="fa fa-remove"></span> Delete</a></li>
+        
+        <li class="divider"></li>
+        <li><a href="{{ url_for('spark.sort', column=column) + '?order=asc' }}"><span class="fa fa-sort-amount-asc"></span> Sort Ascending</a></li>
+        <li><a href="{{ url_for('spark.sort', column=column) + '?order=desc' }}"><span class="fa fa-sort-amount-desc"></span> Sort Descending</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#grid_filter_modal" data-column="{{column}}" data-operation="filter"><span class="fa fa-filter"></span> Filter</a></li>
+        
+        {% if type != 'string' %}
+        <li class="divider"></li>
+        <li><a href="{{url_for('spark.convert', column=column)}}"><span class="fa fa-quote-right"></span> Convert to text</a></li>
+        {% endif %}
+        
+        {% if type == 'string' %}
+        <li class="divider"></li>
+        <li><a href="{{url_for('spark.label', column=column)}}"><span class="fa fa-tag"></span> Label</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#grid_split_modal" data-column="{{column}}" data-operation="split"><span class="fa fa-columns"></span> Split</a></li>
+
+        <li class="divider"></li>
+        <li><a href="{{url_for('spark.tf_idf', column=column)}}"><span class="glyphicon glyphicon-equalizer fa-rotate-90"></span> Term Frequency (TF-IDF)</a></li>
+        <li><a href="{{url_for('spark.lda', column=column)}}"><span class="fa fa-sitemap"></span> Topic Modeling (LDA)</a></li>
+        <!---->
+        <li><a href="{{url_for('spark.preprocess', column=column)}}"><span class="fa fa-share-square-o"></span> Preprocessing</a></li>
+        <li><a href="{{url_for('spark.tokenize', column=column)}}"><span class="fa fa-share-square-o"></span> Tokenizer</a></li>
+        <li><a href="{{url_for('spark.entity_recognition', column=column)}}"><span class="fa fa-share-square-o"></span> Entity Recognition</a></li>
+        
+        {% elif type == 'array<string>' %}
+        <li class="divider"></li>
+        <li><a href="{{url_for('spark.tf_idf', column=column)}}"><span class="fa fa-share-square-o"></span> TF-IDF</a></li>
+        <li><a href="{{url_for('spark.word2vec', column=column)}}"><span class="fa fa-share-square-o"></span> Word2Vec</a></li>
+        {% elif type == 'vector' %}
+        <li class="divider"></li>
+        <li><a href="{{url_for('spark.expand', column=column)}}"><span class="fa fa-columns"></span> Expand</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    </th>
+    {% endif %}
+    {% endfor %}
+</tr>
+
+</thead>
+<tbody>
+
+{% for i in range(0,data|length) %}
+    <tr>
+    <td><div class="pull-right"><b>{{i+1}}</b></div></td>
+    {% for column, type in schema %}
+    {%if column != 'GridID' %}
+    
+    {%if data[i][column] != None %}
+      {%if type in ['string']  %}
+        {%if data[i][column]|length > (column|length + type|length + 2)*4 %}
+        <td>{{ (data[i][column][:(column|length + type|length + 2)*4 ])|safe + ' ...'}}<span class="pull-right"> [...] </span></td>
+        {% else %}
+        <td>{{ data[i][column]|safe }}</td>
+        {%endif%}
+      {%elif type in ['array<string>']  %}
+        {%if data[i][column]|length > 50 %}
+        <td>{{ (data[i][column][:50] + ['...'])|tojson|safe }}</td>
+        {% else %}
+        <td>{{ data[i][column]|tojson|safe }}</td>
+        {%endif%}
+        
+      {% else %}
+        <td>{{ data[i][column] }}</td>
+      {% endif %}
+    {% else %}
+        <td><i style="color:#999;">NULL</i></td>
+    {% endif %}
+    
+    
+    {% endif %}
+    {% endfor %}
+    </tr>
+{% endfor %}
+
+</tbody>
+</table>
+<!-- #table /.table-responsive -->
+
+{% endif %}
+
+<hr>
+<div id="sql-code" class="form-group">
+  <!--<label for="comment">Comment:</label>-->
+  <textarea class="form-control" rows="5" id="comment"></textarea>
+</div>
+
+
+</div><!-- /.col-md-12 -->
+</div><!-- /.row -->
+
+
+{% include "elements/modal-grid-add-column.html" %}
+{% include "elements/modal-grid-save.html" %}
+{% include "elements/modal-grid-filter.html" %}
+{% include "elements/modal-grid-split.html" %}
+{% include "elements/modal-grid-rename.html" %}
+
+{% endblock content %}

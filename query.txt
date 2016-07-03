@@ -1,0 +1,26 @@
+Queries (CSV, JSON, Parquet, TXT)
+
+Simple:
+SELECT * FROM users.csv
+
+Projection: 
+SELECT name, email FROM users.parquet
+
+Selection: 
+SELECT * FROM wikipedia.txt WHERE value LIKE '%corpus%'
+
+Simple Aggregation: 
+SELECT count(*) count FROM docs.txt WHERE value like '%cake%'
+
+GroupBy Aggregation: 
+SELECT city, count(*) people FROM users.json GROUP BY city
+
+GroupBy/Having Aggregation:
+SELECT name, count(*) count FROM tweets.json WHERE tweet is not null GROUP BY name HAVING count > 5
+
+
+SELECT * FROM persons, tweets
+WHERE persons.PersonID = tweets.user_id
+
+SELECT * FROM City JOIN CountryLanguage ON City.CountryCode = CountryLanguage.CountryCode
+WHERE CountryLanguage.IsOfficial = 'T'

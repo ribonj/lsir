@@ -1,0 +1,38 @@
+
+<!-- Button trigger modal -->
+<div class="modal fade" id="add_column_modal" tabindex="-1" role="dialog" aria-labelledby="addColumnModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Column</h4>
+      </div>
+      
+      <form class="form-horizontal" role="form" action="{{ url_for('spark.add_column') }}" method="get">
+        <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="name" class="control-label col-sm-3">Name:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="name" value="">
+             </div>
+          </div> <!-- .form-group -->
+          
+          <div class="form-group">
+            <label for="value" class="control-label col-sm-3">Value:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="value" value="">
+            </div>
+          </div> <!-- /.form-group -->
+          
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div><!-- .modal-footer -->
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.button trigger modal -->

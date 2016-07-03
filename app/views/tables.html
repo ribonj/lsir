@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% set active_page = "table" %} 
+{% block content %}
+
+
+<div id="pivot_table" class="row">
+
+<form action="/query" method="post" role="form">
+  <div class="col-md-4 cell">
+    <div class="form-group">
+      <textarea class="form-control form-control-primary" name="query" rows="4" placeholder="SQL Query...">
+      {%- if query is defined -%}
+        {{ query }}
+      {%- endif -%}
+      </textarea>
+    </div> <!-- .form-group -->
+    <div class="btn-group pull-right">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        {% if table_names is defined and table_names|length > 0 %}
+        <ul id="table-names" class="dropdown-menu">
+          {% for name in table_names %}
+          <li><a href="/query/{{name}}">{{ name }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <!-- .btn-group -->
+      <input class="btn btn-primary" type="submit" value="Query" />
+    </div>
+    <!-- .btn-group .pull-right -->
+</form>
+</div>
+<!-- .col-md-4 -->
+
+  <div class="col-md-8">
+    <div id="pivot"></div>
+  </div>
+  <!-- .col-md-8 -->
+</div>
+<!-- .row -->
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+  
+  <table id="data_table" class="table table-bordered table-hover table-striped table-condensed">
+    {% include "elements/dataframe.html" %}
+  </table>
+<!-- #table /.table-responsive -->
+  </div>
+  <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->
+
+
+{% endblock content %}
+

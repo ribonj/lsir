@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{# 
+  assignments outside of blocks in child templates are global and 
+  executed before the layout template is evaluated.
+#}
+{% set active_page = "source" %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <table id="source_table" class="table table-hover table-striped table-condensed">
+        <thead>
+            <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Format</th>
+            <th class="text-right">Size</th>
+            <th></th>
+            <th>Count</th>
+            <th>Source</th>
+            <th><div class="pull-right">Actions</div></th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for s in sources %}
+            <tr>
+              {% if s['type'] == 'File' %}
+              <td><span class="fa fa-file-text-o"></span></td>
+              {% elif s['type'] == 'Database' %}
+              <td><span class="fa fa-table"></span></td>
+              {% elif s['type'] == 'Online Data' %}
+              <td><span class="fa fa-cloud"></span></td>
+              {% else %}
+              <td><span class="fa fa-file-text"></span></td>
+              {% endif %}
+              <td>{{ s['name'] }}</td>
+              <td>{{ s['type'] }}</td>
+              <td>{{ s['format'] }}</td>
+              <td class="text-right">{{ s['size']['measure'] if s['size'] != None else '' }}</td>
+              <td>{{ s['size']['unit'] if s['size'] != None else '' }}</td>
+              <td>{{ s['count'] if s['count'] != None else '' }}</td>
+              <td>{{ s['source'] }}</td>
+              <td>
+                <div class="btn-group pull-right">
+                  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-caret-down"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url_for('main.load', id=s['id']) }}" title="Load source as new Data Grid">
+                        <span class="fa fa-th"></span> Load</a>
+                    </li>
+                    <li><a href="{{ url_for('main.join', id=s['id']) }}" title="Join source with current Data Grid">
+                        <span class="fa fa-link"></span> Join</a>
+                    </li>
+                    {% if s['type'] != 'File (HDFS)' %}
+                    <li class="divider"></li>
+                    <li><a href="{{ url_for('main.send_to_hdfs', id=s['id']) }}" title="Transfer local file to HDFS">
+                        <span class="glyphicon glyphicon-save"></span> Save to HDFS</a>
+                    </li>
+                    {% endif %}
+                    <li class="divider"></li>
+                    <li><a href="{{ url_for('main.delete', id=s['id']) }}" title="Delete source">
+                        <span class="fa fa-times"></span> Delete</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+        </table>
+      </div>
+      <!-- /.table-responsive -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+{% include "elements/modal-online.html" %}
+{% include "elements/modal-database.html" %}
+{% endblock content %}
+

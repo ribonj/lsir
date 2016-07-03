@@ -1,0 +1,91 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Dashboard</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+    
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-files-o fa-fw"></i> Documents
+            </div>
+            <!-- /.panel-heading -->
+            
+            <div class="panel-body">
+                
+                {% include "list.html" %}
+                
+                <div class="input-group pull-right">
+                <form id="upload" action="/upload" method="post" enctype="multipart/form-data">
+                    <label for="file" class="btn btn-default">
+                        <input id="file" type="file" name="file" style="display:none;" multiple>
+                        Upload...
+                    </label>
+                </form>
+                </div>
+                
+            </div>
+            <!-- /.panel-body -->
+            
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-4 -->
+    
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-table fa-fw"></i> Table
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                    
+                        <form action="/spark/query" method="post" role="form">
+                        <div class="form-group input-group">
+                            <input name="query" 
+                                class="form-control" 
+                                type="text" 
+                                placeholder="SQL Query..." 
+                                {% if query is defined %}
+                                value="{{ query }}"
+                                {% else %}
+                                value=""
+                                {% endif %}
+                            >
+                            <span class="input-group-btn">
+                                <input class="btn btn-default" type="submit" value="Run" />
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                        
+                        {% include "spark_table.html" %}
+                        
+                        </form>
+                        
+                    </div>
+                    <!-- /.col-lg-12 -->
+                    
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-8 -->
+
+</div>
+<!-- /.row -->
+
+{% endblock content %}
+

@@ -1,0 +1,26 @@
+{% if table is defined %}
+<div id="table">
+<table class="table table-hover table-striped">
+
+<thead>
+    <tr>
+    {% for column in table['headers'] %}
+        <th>{{ column }}</th>
+    {% endfor %}
+    </tr>
+</thead>
+
+<tbody>
+{% for row in table['data'] %}
+    <tr>
+    {% for field in row %}
+    <td>{{ field }}</td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+<!-- /.table-responsive -->
+{% endif %}

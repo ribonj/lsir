@@ -1,0 +1,16 @@
+
+<ul id="list" class="list-group">
+{% for i in range(list|count) %}
+    <li id="{{i}}" class="list-group-item">
+        <i class="fa fa-file-text fa-fw"></i> 
+        <span>{{list[i]['file']}}</span>
+        <span class="text-muted small"><em> - {{list[i]['size']}} Bytes</em></span>
+        
+        <div class="pull-right">
+            <a href="{{ url_for('spark.load', file=list[i]['file']) }}" title="Process">Process</a>
+            <a href="/delete/{{list[i]['file']}}"  title="Delete">Delete</a>
+        </div>
+    </li>
+{% endfor %}
+</ul>
+<!-- /.list-group -->

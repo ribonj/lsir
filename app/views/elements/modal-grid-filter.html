@@ -1,0 +1,40 @@
+
+<!-- Button trigger modal -->
+<div class="modal fade" id="grid_filter_modal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Filter</h4>
+      </div>
+      <form class="form-horizontal" role="form" action="#" method="get">
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-sm-4"><input type="text" class="form-control" name="column" disabled></div>
+            <div class="col-sm-3">
+                <select class="form-control" name="op">
+                  <option value="<=">&le;</option>
+                  <option value="<">&lt;</option>
+                  <option value="=" selected="selected">=</option>
+                  <option value="!=">&ne;</option>
+                  <option value=">=">&ge;</option>
+                  <option value=">">&gt;</option>
+                  <option value="like">like</option>
+                  <option value="is null">is null</option>
+                  <option value="is not null">is not null</option>
+                </select>
+             </div>
+            <div class="col-sm-5"><input type="text" class="form-control" name="val"></div>
+          </div>
+        </div>
+        <!-- .modal-body -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+        <!-- .modal-footer -->
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.button trigger modal -->

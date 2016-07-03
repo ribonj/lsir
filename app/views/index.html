@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>LSIR - Large Scale Textual Data Visualization</h1>
+        <p><b>Keywords: <i>Data Analysis, Information Retrieval, Machine Learning, Data Visualization, Data Modeling, Natural Language Processing.</i></b></p>
+        <br>
+        <p>As the amount of data is doubling every two years, many organizations struggle to analyze and make use of their data sets. Not only is the data continuously increasing in size but also in terms of source variety. As a result, the major part of that data is unstructured (e.g. in form of PDF or plain-text documents) and therefore not directly exploitable.
+Using rigid mapping-based ETL tools, the process of converting and formatting raw data sets usually takes more than 80% of the whole analysis process. Moreover, business analysts usually rely on IT experts to prepare and access their data, which require days or even months before analysts can start working on their data. Even with a specific business model in mind, data analysts or scientists do not necessarily know about the insights and categories they are looking for or even the categories, making the whole analysis process even longer and complex. Successful analysis relies upon accurate, well-structured data that has been massaged for specific needs of the task at hand. It is therefore crucial for companies to be able to quickly and intuitively extract knowledge from underlying data sources in order to drive value and innovation.</p>
+        <p>The goal of this project is to build a product to help people work with data in order to get faster and better insights about their assets. More precisely, we plan to develop an online software application that empowers data analysts and scientists with the ability to quickly explore, transform and visualize large amount of unstructured data. This tool should provide (1) data storage, (2) machine learning capabilities, and (3) an intuitive processing and visualization environment. First, the data storage should offer an adaptive schema to dynamically and seamlessly adapt to newly discovered data dimensions and categories. Second, machine learning capabilities should be used to ease raw data manipulation by suggesting possible transformations, as well as data interpretation by identifying trends in a specific area of expertise. The idea is to create a symbiosis between human analysts and the machine, so that both learn from each other over time. Finally, the interactive environment should assist analysts through the whole data preparation pipeline (including data discovery, structuring, cleaning, enrichment, validation, and publishing) by automatically extracting knowledge from raw textual data and provide intuitive visual representation of the transformed data.</p>
+        <p>In the context of this project, we plan to study existing software products that try to address this problem. We also plan to leverage modern tools and frameworks to process and analyze large amounts of textual data, which includes but is not limited to Hadoop, Spark, CoreNLP, and Lucene.
+Our online application will be implemented using Flask, a micro-framework for Python based on Werkzeug and Jinja2, as it aims to keep the Web application’s core simple but extendible, and make no choice about the underlying databases or data model. In particular, this allows us to setup Spark directly on top of HDFS and use it as both processing and storage layer. A graph library should also be used to allow end-users to visualize their data sets and produce interactive charts. Finally, at the end of the project, a first prototype should be deployed online and made available for potential users.</p>
+        <p>For more information about this project, contact <a href="mailto:julien.ribon@epfl.ch">Julien Ribon</a>.
+    </div>
+</div>
+<!-- .row -->
+
+{% endblock content %}
+
